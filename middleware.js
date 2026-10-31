@@ -23,7 +23,7 @@ export default function middleware(request) {
   // Fail closed: an unset password must not leave the site wide open.
   if (!expectedPassword) return challenge();
 
-  const expectedUser = process.env.SITE_USER || 'admin';
+  const expectedUser = process.env.SITE_USER || 'aiden';
 
   const header = request.headers.get('authorization') || '';
   const [scheme, encoded] = header.split(' ');
