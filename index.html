@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aiden</title>
   <meta name="description" content="Aiden's site.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;600&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: light dark;
@@ -31,8 +34,14 @@
       place-items: center;
       background: var(--bg);
       color: var(--fg);
-      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+      font: 16px/1.6 "Noto Sans", "Noto Sans Khmer", system-ui, -apple-system, "Segoe UI", sans-serif;
       padding: 2rem 1rem;
+    }
+    /* Khmer stacked glyphs need more leading than Latin at the same size. */
+    .khmer {
+      font-family: "Noto Sans Khmer", "Noto Sans", sans-serif;
+      line-height: 2;
+      font-size: 1.0625rem;
     }
     main {
       max-width: 34rem;
@@ -52,6 +61,7 @@
   <main>
     <h1>Aiden</h1>
     <p class="muted">Replace this text with whatever you want on your site.</p>
+    <p lang="km" class="khmer">សូមស្វាគមន៍មកកាន់គេហទំព័ររបស់ខ្ញុំ</p>
     <nav>
       <a href="#">Link one</a>
       <a href="#">Link two</a>
