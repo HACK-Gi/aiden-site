@@ -1,0 +1,11 @@
+{
+  "name": "aiden-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx vercel dev"
+  },
+  "dependencies": {
+    "@vercel/functions": "^3.10.5"
+  }
+}

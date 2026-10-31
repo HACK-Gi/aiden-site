@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aiden</title>
+  <meta name="description" content="Aiden's site.">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --fg: #1a1a1a;
+      --muted: #666;
+      --bg: #fafafa;
+      --card: #fff;
+      --line: #e2e2e2;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: #ededed;
+        --muted: #999;
+        --bg: #111;
+        --card: #1a1a1a;
+        --line: #2b2b2b;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+      padding: 2rem 1rem;
+    }
+    main {
+      max-width: 34rem;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 2.5rem;
+    }
+    h1 { margin: 0 0 .5rem; font-size: 2rem; letter-spacing: -.02em; }
+    p { margin: 0 0 1rem; }
+    .muted { color: var(--muted); }
+    nav { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    a { color: inherit; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Aiden</h1>
+    <p class="muted">Replace this text with whatever you want on your site.</p>
+    <nav>
+      <a href="#">Link one</a>
+      <a href="#">Link two</a>
+      <a href="#">Link three</a>
+    </nav>
+  </main>
+</body>
+</html>
