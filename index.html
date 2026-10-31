@@ -16,6 +16,11 @@
       --bg: #fafafa;
       --card: #fff;
       --line: #e2e2e2;
+      --term-bg: #14161a;
+      --term-fg: #d7dae0;
+      --term-dim: #7d838d;
+      --term-accent: #7ee787;
+      --term-bar: #21242a;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -38,7 +43,8 @@
       padding: 2rem 1rem;
     }
     main {
-      max-width: 34rem;
+      width: 100%;
+      max-width: 40rem;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -49,15 +55,122 @@
     .muted { color: var(--muted); }
     nav { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
     a { color: inherit; }
+
+    .term {
+      margin-top: 1.75rem;
+      background: var(--term-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+    }
+    .term-bar {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--term-bar);
+      padding: .6rem .85rem;
+      color: var(--term-dim);
+      font: 12px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .dot:nth-child(1) { background: #ff5f57; }
+    .dot:nth-child(2) { background: #febc2e; }
+    .dot:nth-child(3) { background: #28c840; }
+    .term-title { margin-left: .5rem; }
+    .term-body {
+      padding: 1rem 1.1rem 1.2rem;
+      color: var(--term-fg);
+      font: 13.5px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      min-height: 13rem;
+    }
+    .term-out { white-space: pre-wrap; word-break: break-word; margin: 0; }
+    .term-out .dim { color: var(--term-dim); }
+    .term-out .ok { color: var(--term-accent); }
+    .term-form { display: flex; align-items: baseline; gap: .5rem; }
+    .prompt { color: var(--term-accent); white-space: nowrap; }
+    .term-input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      outline: none;
+      color: var(--term-fg);
+      caret-color: var(--term-accent);
+      font: inherit;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .term-input:focus { box-shadow: inset 0 -1px 0 var(--term-accent); }
+    }
   </style>
 </head>
 <body>
   <main>
     <h1>Aiden</h1>
     <p class="muted">Replace this text with whatever you want on your site.</p>
+
+    <section class="term" aria-label="Terminal demo">
+      <div class="term-bar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="term-title">aiden@web &mdash; decorative terminal</span>
+      </div>
+      <div class="term-body">
+        <output class="term-out" id="out"></output>
+        <form class="term-form" id="form" autocomplete="off">
+          <span class="prompt">aiden@web:~$</span>
+          <label class="visually-hidden" for="cmd" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Command</label>
+          <input class="term-input" id="cmd" name="cmd" spellcheck="false" autofocus>
+        </form>
+      </div>
+    </section>
+
     <nav>
       <a href="https://github.com/HACK-Gi/aiden-site" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </main>
+
+  <script>
+    const out = document.getElementById('out');
+    const form = document.getElementById('form');
+    const input = document.getElementById('cmd');
+
+    const line = (text, cls) => {
+      const span = document.createElement('span');
+      if (cls) span.className = cls;
+      span.textContent = text + '\n';
+      out.appendChild(span);
+    };
+
+    // Decorative only. Every response below is a fixed string or a value the
+    // browser already knows; nothing here touches the filesystem or a shell.
+    const replies = {
+      help: 'commands: help, about, repo, time, whoami, clear',
+      about: 'A decorative terminal. It pretends; it cannot execute anything.',
+      repo: 'https://github.com/HACK-Gi/aiden-site',
+      whoami: 'aiden',
+    };
+
+    line('aiden@web login ok \u2014 session started', 'ok');
+    line('type "help" for the command list\n', 'dim');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const raw = input.value.trim();
+      input.value = '';
+      if (!raw) return;
+
+      line('aiden@web:~$ ' + raw);
+
+      const cmd = raw.toLowerCase();
+      if (cmd === 'clear') {
+        out.textContent = '';
+      } else if (cmd === 'time') {
+        line(new Date().toString());
+      } else if (cmd in replies) {
+        line(replies[cmd], 'ok');
+      } else {
+        line('aiden@web: command not found: ' + raw, 'dim');
+      }
+      input.focus();
+    });
+  </script>
 </body>
 </html>
